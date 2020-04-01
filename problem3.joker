@@ -1,0 +1,14 @@
+;; Problem 3
+;; Largest prime factor
+
+(defn f
+  [num]
+  (let [half (/ num 2)]
+    (loop [i 2 n num]
+      (if (and (< i half) (>= n i))
+        (if (= 0 (mod n i))
+          (recur i (/ n i))
+          (recur (inc i) n))
+        i))))
+
+(println "factor is" (f 600851475143))
