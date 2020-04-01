@@ -1,0 +1,36 @@
+;; Problem 2
+;; Even Fibonacci numbers
+
+(defn fib
+  [n]
+  (cond 
+    (< n 1) 0
+    (= n 1) 1
+    (= n 2) 2
+    :else (loop [i 3 a 1 b 2]
+      (if (<= i n)
+        (recur (inc i) b (+ a b))
+        (+ a b)))))
+
+(defn lazy_fib
+  ([] (lazy_fib 1))
+  ([n] (cons (fib n) (lazy-seq (lazy_fib (+ n 1))))))
+
+(defn get_idx_lt
+  [max]
+  (let [mfib (memoize fib)]
+    (loop [idx 0]
+    (if (< (mfib idx) max)
+      (recur (inc idx))
+      (- idx 1)))))
+
+(defn f
+  [max]
+  (let [idx  (get_idx_lt max)
+        fibs (take idx (lazy_fib))
+        evens (filter even? fibs)
+        sum  (reduce + evens)]
+  sum))
+
+(println "sum is " (f 4000000))
+
