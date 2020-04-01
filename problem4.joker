@@ -6,9 +6,7 @@
   (let [n (range x y)]
     (loop [i x acc ()]
       (if (< i y)
-        (recur
-          (inc i)
-          (reduce #(cons (list i %2 (* i %2)) %1) acc n))
+        (recur (inc i) (reduce #(cons (list i %2 (* i %2)) %1) acc n))
         acc))))
 
 (defn reverse_num
