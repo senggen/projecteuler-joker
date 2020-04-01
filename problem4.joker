@@ -1,0 +1,33 @@
+;; Problem 4
+;; Largest palindrome product
+
+(defn gen_list
+  [x y]
+  (let [n (range x y)]
+    (loop [i x acc ()]
+      (if (< i y)
+        (recur
+          (inc i)
+          (reduce #(cons (list i %2 (* i %2)) %1) acc n))
+        acc))))
+
+(defn reverse_num
+  [num]
+  (loop [x num acc ()]
+    (if (> x 0)
+      (recur (joker.math/floor (/ x 10)) (cons (rem x 10) acc))
+      (reduce #(+ %2 (* %1 10)) 0 (reverse acc)))))
+
+(defn palindromic?
+  [num]
+  (let [revnum (reverse_num num)]
+    (= (int num) (int revnum))))
+
+(defn f
+  [x y]
+  (let [ps (gen_list x y)
+        palindromics (filter #(palindromic? (nth % 2)) ps)
+        sorted (sort #(> (nth %1 2) (nth %2 2)) palindromics)]
+    (first sorted)))
+
+(println (f 100 1000))
