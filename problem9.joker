@@ -1,0 +1,19 @@
+;; Problem 9
+;; Special Pythagorean triplet
+
+(defn sq [x]
+  (* x x))
+
+(defn pythagorean? [a b c]
+  (let [m-sq (memoize sq)]
+  (= (+ (m-sq a) (m-sq b)) (m-sq c))))
+
+(defn f []
+  (loop [x 1 y 2 z 3 acc ()]
+    (cond
+      (and (= 1000 (+ x y z)) (pythagorean? x y z)) (* x y z)
+      (= y 1000) (recur (inc x) (inc x) (inc x) acc)
+      (= z 1000) (recur x (inc y) (inc y) acc)
+      :else (recur x y (inc z) acc))))
+
+(println (f))
