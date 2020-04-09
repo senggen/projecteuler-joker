@@ -1,18 +1,24 @@
 ;; Problem 10
 ;; Summation of primes
 
-(defn divides? [m n] 
-  (zero? (rem m n)))
-
-(defn prime? [to]
-  (and (> to 1) (not-any? #(divides? to %) (range 2 to))))
-
-(defn prime_ex? [to primes]
-  (and (> to 1) (not-any? #(divides? to %) primes)))
+(defn prime? [n]
+  (cond
+    (= n 1) true
+    (< n 4) true
+    (zero? (mod n 2)) false
+    (< n 9) true
+    (zero? (mod n 3)) false
+    :else (let [r (joker.math/floor (joker.math/sqrt n))]
+      (loop [k 5]
+        (cond
+          (> k r) true
+          (zero? (mod n k)) false
+          (zero? (mod n (+ k 2))) false
+          :else (recur (+ k 6)))))))
 
 (defn find_next_prime [primes last_prime]
   (loop [i (inc last_prime)]
-    (if (prime_ex? i primes)
+    (if (prime? i)
       (cons i primes)
       (recur (inc i)))))
 
@@ -23,4 +29,3 @@
       (recur (find_next_prime primes (first primes))))))
 
 (println (f 2000000))
-
