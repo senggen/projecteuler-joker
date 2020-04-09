@@ -1,0 +1,26 @@
+;; Problem 10
+;; Summation of primes
+
+(defn divides? [m n] 
+  (zero? (rem m n)))
+
+(defn prime? [to]
+  (and (> to 1) (not-any? #(divides? to %) (range 2 to))))
+
+(defn prime_ex? [to primes]
+  (and (> to 1) (not-any? #(divides? to %) primes)))
+
+(defn find_next_prime [primes last_prime]
+  (loop [i (inc last_prime)]
+    (if (prime_ex? i primes)
+      (cons i primes)
+      (recur (inc i)))))
+
+(defn f [n]
+  (loop [primes '(2)]
+    (if (> (first primes) n)
+      (reduce + (pop primes))
+      (recur (find_next_prime primes (first primes))))))
+
+(println (f 2000000))
+
