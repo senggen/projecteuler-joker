@@ -1,8 +1,7 @@
 ;; Problem 6
 ;; Sum square difference
 
-(defn f
-  [n]
+(defn f [n]
   (let [rg (range 1 (inc n))
         sum_of_rg (reduce + rg)
         square_of_sum (* sum_of_rg sum_of_rg)

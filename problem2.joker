@@ -1,8 +1,7 @@
 ;; Problem 2
 ;; Even Fibonacci numbers
 
-(defn fib
-  [n]
+(defn fib [n]
   (cond 
     (< n 1) 0
     (= n 1) 1
@@ -16,17 +15,15 @@
   ([] (lazy_fib 1))
   ([n] (cons (fib n) (lazy-seq (lazy_fib (+ n 1))))))
 
-(defn get_idx_lt
-  [max]
+(defn get_idx_lt [m]
   (let [mfib (memoize fib)]
     (loop [idx 0]
-    (if (< (mfib idx) max)
+    (if (< (mfib idx) m)
       (recur (inc idx))
       (- idx 1)))))
 
-(defn f
-  [max]
-  (let [idx  (get_idx_lt max)
+(defn f [m]
+  (let [idx  (get_idx_lt m)
         fibs (take idx (lazy_fib))
         evens (filter even? fibs)
         sum  (reduce + evens)]

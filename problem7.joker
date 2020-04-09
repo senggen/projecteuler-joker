@@ -1,27 +1,22 @@
 ;; Problem 7
 ;; 10001st prime
 
-(defn divides? 
-  [m n] 
+(defn divides? [m n] 
   (zero? (rem m n)))
 
-(defn prime?
-  [to]
+(defn prime? [to]
   (and (> to 1) (not-any? #(divides? to %) (range 2 to))))
 
-(defn prime_ex?
-  [to primes]
+(defn prime_ex? [to primes]
   (and (> to 1) (not-any? #(divides? to %) primes)))
 
-(defn find_next_prime
-  [primes last_prime]
+(defn find_next_prime [primes last_prime]
   (loop [i (inc last_prime)]
     (if (prime_ex? i primes)
       (cons i primes)
       (recur (inc i)))))
 
-(defn f
-  [n]
+(defn f [n]
   (loop [i 1 primes '(2)]
     (if (= i n)
       (first primes)

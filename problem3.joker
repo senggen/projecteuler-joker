@@ -1,8 +1,7 @@
 ;; Problem 3
 ;; Largest prime factor
 
-(defn f
-  [num]
+(defn f [num]
   (let [half (/ num 2)]
     (loop [i 2 n num]
       (if (and (< i half) (>= n i))
