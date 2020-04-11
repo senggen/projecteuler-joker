@@ -1,0 +1,23 @@
+;; Problem 14
+;; Longest Collatz sequence
+
+(defn collatz [n]
+  (if (odd? n)
+    (+ 1 (* 3 n))
+    (quot n 2)))
+
+(defn collatz-chain [n]
+  (let [m-col (memoize collatz)]
+  (loop [i n acc []]
+    (if (= i 1)
+      (conj acc i)
+      (let [c (m-col i)]
+        (recur c (conj acc i)))))))
+
+(defn f [n]
+  (let [m (for [x (range 1 n)
+          :let [y (count (collatz-chain x))]] [x y])
+        s (sort #(> (%1 1) (%2 1)) m)]
+    (first s)))
+
+(println (f 1000000))
